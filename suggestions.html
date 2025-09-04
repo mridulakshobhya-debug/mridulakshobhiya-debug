@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Juniors Hub - Feedback & Suggestions</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon.PNG">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon.PNG">
+  <link rel="manifest" href="/site.webmanifest">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      margin: 0;
+      color: #e8ecff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      background: radial-gradient(1200px 800px at 10% 10%, #1a2140, transparent 60%),
+                  radial-gradient(900px 700px at 90% 30%, #0f1b4a, transparent 60%),
+                  radial-gradient(900px 700px at 10% 90%, #0b2b3a, transparent 60%),
+                  linear-gradient(180deg,#0b0f19,#12182a);
+    }
+    .card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+      width: 100%;
+      max-width: 420px;
+      animation: fadeUp 0.6s ease;
+      margin: 48px auto 0 auto;
+      align-self: center;
+    }
+    h2 {
+      margin-top: 0;
+      font-size: 1.4rem;
+      font-weight: 600;
+      text-align: center;
+      color: #1f2937;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    input, textarea {
+      padding: 10px;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-family: inherit;
+      resize: none;
+    }
+    button {
+      background: #2563eb;
+      border: none;
+      color: #fff;
+      padding: 10px;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+    button:hover {
+      background: #1d4ed8;
+    }
+    .feedback-list {
+      margin-top: 16px;
+      max-height: 200px;
+      overflow-y: auto;
+      padding-right: 4px;
+    }
+    .feedback-item {
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      padding: 10px;
+      margin-bottom: 8px;
+      font-size: 0.9rem;
+      animation: fadeUp 0.4s ease;
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar (at very top of page) -->
+  <header style="position:relative; top:0; z-index:100; background:#0b0f19; box-shadow:0 2px 16px #00000022;">
+    <div class="container nav" style="max-width:1200px; margin:0 auto;">
+      <div class="logo" style="display:flex; align-items:center; gap:.7rem; font-weight:800; letter-spacing:.4px; font-size:1.25rem; color:#22d3ee;">
+        <div class="logo-badge" style="width:36px; height:36px; border-radius:12px; background:conic-gradient(from 210deg, #7c3aed, #22d3ee, #10b981, #7c3aed); box-shadow:0 10px 30px #00000060;"></div>
+        <span>KIDPRENEUR</span>
+      </div>
+      <nav style="display:flex; align-items:center; gap:18px;">
+        <a href="index.html" style="color:#aab3d3; text-decoration:none; font-weight:600; font-size:1.08rem; padding:8px 16px; border-radius:8px; transition:background .18s, color .18s, box-shadow .18s;">Home</a>
+        <a href="#features" style="color:#aab3d3; text-decoration:none; font-weight:600; font-size:1.08rem; padding:8px 16px; border-radius:8px;">Features</a>
+        <a href="#roadmap" style="color:#aab3d3; text-decoration:none; font-weight:600; font-size:1.08rem; padding:8px 16px; border-radius:8px;">Roadmap</a>
+        <a href="faq.html" style="color:#aab3d3; text-decoration:none; font-weight:600; font-size:1.08rem; padding:8px 16px; border-radius:8px;">FAQ</a>
+        <a href="ai.html" style="color:#aab3d3; text-decoration:none; font-weight:600; font-size:1.08rem; padding:8px 16px; border-radius:8px;">Chatbot</a>
+        <a href="about.html" style="color:#aab3d3; text-decoration:none; font-weight:600; font-size:1.08rem; padding:8px 16px; border-radius:8px;">About us</a>
+        <a href="join.html" class="btn" style="background:linear-gradient(135deg,#22d3ee,#7c3aed); color:#0b0f19; font-weight:800; border:none; box-shadow:0 4px 16px #22d3ee44; padding:10px 22px; border-radius:14px; margin-left:10px;">Join</a>
+      </nav>
+    </div>
+  </header>
+  <!-- ...existing code... -->
+  <div class="card">
+    <h2>Feedback & Suggestions</h2>
+    <form id="feedbackForm">
+      <input type="text" id="name" placeholder="Your name" required>
+      <textarea id="comment" rows="3" placeholder="Your feedback" required></textarea>
+      <button type="submit">Submit</button>
+    </form>
+    <div class="feedback-list" id="feedbackList"></div>
+  </div>
+
+  <script>
+    const form = document.getElementById('feedbackForm');
+    const list = document.getElementById('feedbackList');
+    let feedbacks = JSON.parse(localStorage.getItem('feedbacks') || '[]');
+
+    function render() {
+      list.innerHTML = '';
+      feedbacks.forEach(f => {
+        const div = document.createElement('div');
+        div.className = 'feedback-item';
+        div.innerHTML = `<b>${f.name}</b><br>${f.comment}`;
+        list.appendChild(div);
+      });
+    }
+
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      const name = document.getElementById('name').value.trim();
+      const comment = document.getElementById('comment').value.trim();
+      if(!name || !comment) return;
+      feedbacks.push({name, comment});
+      localStorage.setItem('feedbacks', JSON.stringify(feedbacks));
+      form.reset();
+      render();
+    });
+    render();
+  </script>
+</body>
+</html>
